@@ -1,10 +1,8 @@
-# ETA
-
-Zadania w tym podfolderze pochodzą z aplikacji [<u>**Exam Tasks Application**</u>](https://inf-04-web-przygotowanie.vercel.app/) przygotowanej specjalnie dla uczniów w ramach ćwiczeń do egzaminu zawodowego <u>INF.04</u> przez [<u>*Viktar-T*</u>](https://github.com/Viktar-T).
+# Repozytorium z rozwiązaniami
 
 ## Wykonał
 
-Wszystkie zadania w tym repozytorium zostały rozwiązane przez:
+Wszystkie zadania w tym repozytorium oraz egzaminy INF.04 zostały rozwiązane przez:
 
 **AdamrePL** - 2025 - 5TC, Technikum Łączności I Multimediów Cyfrowych w Szczecinie.
 
@@ -17,8 +15,6 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 To start a local development server, run:
 
 ```bash
-npm run start (recommended)
-OR
 ng serve
 ```
 
