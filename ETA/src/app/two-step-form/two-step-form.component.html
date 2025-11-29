@@ -6,36 +6,105 @@
             <span class="badge badge-primary">Krok 1/2</span>
         </div>
         <div class="progress mb-3">
-            <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" [style]="this.step ? 'width: 100%;' : 'width: 50%;'">{{this.step ? "100%" : "50%"}}</div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" [style]="this.step == 2 ? 'width: 100%;' : 'width: 50%;'">{{this.step == 2 ? "100%" : "50%"}}</div>
         </div>
         <div class="row text-center">
             <div class="col-6">
                 <div class="p-2 rounded bg-primary text-white"><strong>1. Dane osobowe</strong><span class="ml-1">✓</span></div>
             </div>
-        <div class="col-6">
-            <div class="p-2 rounded bg-light"><strong>2. Preferencje</strong></div>
-        </div>
+            <div class="col-6">
+                <div [class]=" 'p-2 rounded ' + (step == 2 ? 'text-white bg-success' : 'bg-light')"><strong>2. Preferencje</strong><span class="ml-1" [hidden]="step!=2">✓</span></div>
+            </div>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-8">
-        <div class="card">
+        <div class="card" [hidden]="this.displaySummary || step!=1">
             <div class="card-header">
                 <h5 class="card-title mb-0">Krok 1: Dane osobowe</h5>
-            </div><div class="card-body">
+            </div>
+            <div class="card-body">
                 <div class="form-group">
                     <label for="firstName">Imię *</label>
-                    <input class="form-control" id="firstName" placeholder="Wprowadź imię" type="text" value="">
-                </div><div class="form-group">
-                    <label for="lastName">Nazwisko *</label>
-                    <input class="form-control " id="lastName" placeholder="Wprowadź nazwisko" type="text" value="">
-                </div><div class="form-group">
-                    <label for="email">Email *</label>
-                    <input class="form-control " id="email" placeholder="Wprowadź adres email" type="email" value="">
+                    <input class="form-control" id="firstName" placeholder="Wprowadź imię" type="text" [(ngModel)]="this.formDetails.personalData.name">
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary" disabled="">Dalej</button>
+                    <label for="lastName">Nazwisko *</label>
+                    <input class="form-control" id="lastName" placeholder="Wprowadź nazwisko" type="text" [(ngModel)]="this.formDetails.personalData.surname">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input class="form-control" id="email" placeholder="Wprowadź adres email" type="email" [(ngModel)]="this.formDetails.personalData.email">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" [disabled]="isSet(this.formDetails.personalData) || !isValidEmail() || isInputTooShort(2)" (click)="this.step=2">Dalej</button>
+                </div>
+            </div>
+        </div>
+        <div class="card" [hidden]=" this.displaySummary || step!=2">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Krok 2: Preferencje</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="colors">Ulubiony kolor *</label>
+                    <select class="form-control" id="colors" type="text" name="colors" [(ngModel)]="this.formDetails.preferences.color">
+                        <option value="-1">Wybierz kolor</option>
+                        @for (clr of colors; track $index) {
+                            <option [value]="$index">{{clr}}</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Poziom doświadczenia *</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="experience" value="Początkujący" [(ngModel)]="this.formDetails.preferences.level">
+                        <label class="form-check-label">Początkujący</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="experience" value="Średniozaawansowany" [(ngModel)]="this.formDetails.preferences.level">
+                        <label class="form-check-label">Średniozaawansowany</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="experience" value="Zaawansowany" [(ngModel)]="this.formDetails.preferences.level">
+                        <label class="form-check-label">Zaawansowany</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-secondary mr-2" (click)="this.step=1">Wstecz</button>
+                    <button type="button" class="btn btn-success" [disabled]="isSet(this.formDetails.preferences)" (click)="finish()">Zakończ</button>
+                </div>
+            </div>
+        </div>
+        <div class="card" [hidden]="!this.displaySummary">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">✅ Formularz ukończony!</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Dane osobowe:</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Imię:</strong> {{this.formDetails.personalData.name}}</li>
+                            <li><strong>Nazwisko:</strong> {{this.formDetails.personalData.surname}}</li>
+                            <li><strong>Email:</strong> {{this.formDetails.personalData.email}}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Preferencje:</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Ulubiony kolor:</strong> {{this.colors[this.formDetails.preferences.color]}}</li>
+                            <li><strong>Poziom doświadczenia:</strong> {{this.formDetails.preferences.level}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-info mt-3" role="alert">
+                    <h6 class="alert-heading">Dane zostały zapisane!</h6>
+                    <p class="mb-0">Sprawdź konsolę przeglądarki aby zobaczyć połączone dane z obu kroków.</p>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" (click)="restart()">Rozpocznij ponownie</button>
                 </div>
             </div>
         </div>
@@ -65,5 +134,19 @@
                 </p>
             </div>
         </div>
+    </div>
+</div>
+<div class="card mt-4">
+    <div class="card-header">
+        <h6 class="card-title mb-0">Informacje o logowaniu</h6>
+    </div>
+    <div class="card-body">
+        <p class="mb-0">
+            <strong>Konsola przeglądarki:</strong> Po ukończeniu formularza wyświetlany jest obiekt zawierający dane z obu kroków:
+            <br>
+            <code class="ml-1">{{ `{ personalData: {...}, preferences: {...} }` }}</code>
+            <br>
+            Otwórz narzędzia deweloperskie (F12) aby zobaczyć logi.
+        </p>
     </div>
 </div>
