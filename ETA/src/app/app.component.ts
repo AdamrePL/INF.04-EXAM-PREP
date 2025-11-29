@@ -17,6 +17,7 @@ import { EXPENSETRACKComponent } from './expense-track/expense-track.component';
 import { STARRATINGWIDGETComponent } from './star-rating-widget/star-rating-widget.component';
 import { STOPWATCHComponent } from "./stopwatch/stopwatch.component";
 import { TWOSTEPFORMComponent } from './two-step-form/two-step-form.component';
+import { DEPENDENTDROPDOWNSComponent } from './dependent-dropdowns/dependent-dropdowns.component';
 
 const COMPLEXITY_LEVEL_ONE = [
     BOOKMGMTComponent,
@@ -39,12 +40,13 @@ const COMPLEXITY_LEVEL_TWO = [
     EXPENSETRACKComponent,
     STARRATINGWIDGETComponent,
     STOPWATCHComponent,
-    TWOSTEPFORMComponent
+    TWOSTEPFORMComponent,
+    DEPENDENTDROPDOWNSComponent
 ];
 
 @Component({
   selector: 'app-root',
-  imports: [COMPLEXITY_LEVEL_TWO[8]],
+  imports: [COMPLEXITY_LEVEL_TWO[9]],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
