@@ -7,7 +7,7 @@
             </div>
             <div class="card-body">
                 <form (submit)="sendForm($event)">
-                    <label for="countrySelect">Kraj: </label>
+                    <label for="country">Kraj: </label>
                     <select name="country" id="country" class="form-select" (change)="selectCountry($event)">
                         <option value="">Wybierz kraj...</option>
                         @for (item of data; track $index) {
@@ -15,7 +15,7 @@
                         }
                     </select>
 
-                    <label for="citySelect">Miasto: </label>
+                    <label for="city">Miasto: </label>
                     <select name="city" id="city" class="form-select" [disabled]="this.selectedCountry == '' || selectedCountryCities.length == 0" [value]="this.selectedCity" (change)="selectCity($event)">
                         @if (this.selectedCountry != "" && this.selectedCountryCities.length != 0) {
                             <option value="">Wybierz miasto...</option>
