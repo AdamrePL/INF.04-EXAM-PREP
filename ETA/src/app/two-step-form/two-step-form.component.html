@@ -50,9 +50,9 @@
                 <div class="form-group">
                     <label for="colors">Ulubiony kolor *</label>
                     <select class="form-control" id="colors" type="text" name="colors" [(ngModel)]="this.formDetails.preferences.color">
-                        <option value="-1">Wybierz kolor</option>
+                        <option value="">Wybierz kolor</option>
                         @for (clr of colors; track $index) {
-                            <option [value]="$index">{{clr}}</option>
+                            <option>{{clr}}</option>
                         }
                     </select>
                 </div>
@@ -94,7 +94,7 @@
                     <div class="col-md-6">
                         <h6>Preferencje:</h6>
                         <ul class="list-unstyled">
-                            <li><strong>Ulubiony kolor:</strong> {{this.colors[this.formDetails.preferences.color]}}</li>
+                            <li><strong>Ulubiony kolor:</strong> {{this.formDetails.preferences.color}}</li>
                             <li><strong>Poziom doświadczenia:</strong> {{this.formDetails.preferences.level}}</li>
                         </ul>
                     </div>

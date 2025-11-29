@@ -18,7 +18,7 @@ export class TWOSTEPFORMComponent {
             email: ''
         },
         preferences: {
-            color: -1,
+            color: '',
             level: ''
         }
     }
