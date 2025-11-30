@@ -20,6 +20,7 @@ import { TWOSTEPFORMComponent } from './two-step-form/two-step-form.component';
 import { DEPENDENTDROPDOWNSComponent } from './dependent-dropdowns/dependent-dropdowns.component';
 import { KEYBOARDSHORTCUTSComponent } from "./keyboard-shortcuts/keyboard-shortcuts.component";
 import { MINISHOPLINETOTALComponent } from "./mini-shop-line-total/mini-shop-line-total.component";
+import { RANDOMQUOTEComponent } from "./random-quote/random-quote.component";
 
 const COMPLEXITY_LEVEL_ONE = [
     BOOKMGMTComponent,
@@ -45,12 +46,13 @@ const COMPLEXITY_LEVEL_TWO = [
     TWOSTEPFORMComponent,
     DEPENDENTDROPDOWNSComponent,
     KEYBOARDSHORTCUTSComponent,
-    MINISHOPLINETOTALComponent
+    MINISHOPLINETOTALComponent,
+    RANDOMQUOTEComponent
 ];
 
 @Component({
   selector: 'app-root',
-  imports: [COMPLEXITY_LEVEL_TWO[11]],
+  imports: [COMPLEXITY_LEVEL_TWO[12]],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
