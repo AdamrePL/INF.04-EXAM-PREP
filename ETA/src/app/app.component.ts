@@ -18,6 +18,8 @@ import { STARRATINGWIDGETComponent } from './star-rating-widget/star-rating-widg
 import { STOPWATCHComponent } from "./stopwatch/stopwatch.component";
 import { TWOSTEPFORMComponent } from './two-step-form/two-step-form.component';
 import { DEPENDENTDROPDOWNSComponent } from './dependent-dropdowns/dependent-dropdowns.component';
+import { KEYBOARDSHORTCUTSComponent } from "./keyboard-shortcuts/keyboard-shortcuts.component";
+import { MINISHOPLINETOTALComponent } from "./mini-shop-line-total/mini-shop-line-total.component";
 
 const COMPLEXITY_LEVEL_ONE = [
     BOOKMGMTComponent,
@@ -41,12 +43,14 @@ const COMPLEXITY_LEVEL_TWO = [
     STARRATINGWIDGETComponent,
     STOPWATCHComponent,
     TWOSTEPFORMComponent,
-    DEPENDENTDROPDOWNSComponent
+    DEPENDENTDROPDOWNSComponent,
+    KEYBOARDSHORTCUTSComponent,
+    MINISHOPLINETOTALComponent
 ];
 
 @Component({
   selector: 'app-root',
-  imports: [COMPLEXITY_LEVEL_TWO[9]],
+  imports: [COMPLEXITY_LEVEL_TWO[11]],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -1,0 +1,99 @@
+<h2>Formularz z skrótami klawiszowymi</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Dodaj element</h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="itemInput">Nazwa elementu:</label>
+                        <input class="form-control" name="content" placeholder="Wprowadź nazwę elementu..." type="text" [(ngModel)]="text" (keydown)="handleKeyboardEvent($event)">
+                        <small class="text-muted">Użyj <kbd>Enter</kbd> aby dodać, <kbd>Escape</kbd> aby wyczyścić</small>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary mr-2" [disabled]="this.text.length < 1" (click)="handleClick($event)">Dodaj</button>
+                        <button type="button" class="btn btn-secondary" [disabled]="this.elements.length == 0" (click)="clearAllElements()">Wyczyść wszystko</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @if (this.lastAction != '') {
+            <div class="alert alert-info" role="alert">
+                <h6 class="alert-heading">Ostatnia akcja:</h6>
+                <p class="mb-0">{{this.lastAction}}</p>
+                <hr>
+                <p class="mb-0">Sprawdź konsolę przeglądarki aby zobaczyć logi skrótów klawiaturowych.</p>
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="card-title mb-0">Lista elementów</h6><span class="badge bg-secondary">{{elements.length}} elementów</span>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    @for (item of elements; track $index) {
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="font-weight-bold">{{$index+1}}. </span><span class="ml-2">{{item.text}}</span>
+                                <br>
+                                <small class="text-muted">Dodano: {{item.timestamp}}</small>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-danger" title="Usuń element" (click)="remove($index)">×</button>
+                        </div>
+                    }
+                </div>
+                @if (this.elements.length == 0) {
+                    <div class="text-center text-muted py-4">
+                        <p class="mb-0">Brak elementów</p><small>Dodaj pierwszy element używając formularza</small>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="card-title mb-0">Skróty klawiaturowe</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3"><kbd>Enter</kbd><br><small class="text-muted">Dodaj element</small></div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3"><kbd>Escape</kbd><br><small class="text-muted">Wyczyść pole</small></div>
+                    </div>
+                </div>
+                <hr>
+                <div class="mb-2"><strong>Funkcje:</strong>
+                    <ul class="list-unstyled small mt-2">
+                        <li>• Automatyczne odzyskiwanie fokusa po dodaniu</li>
+                        <li>• Walidacja przed dodaniem elementu</li>
+                        <li>• Zapobieganie domyślnym zachowaniom klawiszy</li>
+                        <li>• Logowanie użytych skrótów w konsoli</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title mb-0">Statystyki</h6>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-4">
+                        <h5 class="text-primary">{{this.elements.length}}</h5><small class="text-muted">Łącznie</small>
+                    </div>
+                    <div class="col-4">
+                        <h5 class="text-success">{{getLongTextCount()}}</h5><small class="text-muted">Długie (&gt;10 znaków)</small>
+                    </div>
+                    <div class="col-4">
+                        <h5 class="text-info">{{getAvgLength() || 0}}</h5><small class="text-muted">Średnia długość</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
