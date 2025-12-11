@@ -21,6 +21,7 @@ import { DEPENDENTDROPDOWNSComponent } from './dependent-dropdowns/dependent-dro
 import { KEYBOARDSHORTCUTSComponent } from "./keyboard-shortcuts/keyboard-shortcuts.component";
 import { MINISHOPLINETOTALComponent } from "./mini-shop-line-total/mini-shop-line-total.component";
 import { RANDOMQUOTEComponent } from "./random-quote/random-quote.component";
+import { UNITCONVERTERComponent } from "./unit-converter/unit-converter.component";
 
 const COMPLEXITY_LEVEL_ONE = [
     BOOKMGMTComponent,
@@ -47,15 +48,20 @@ const COMPLEXITY_LEVEL_TWO = [
     DEPENDENTDROPDOWNSComponent,
     KEYBOARDSHORTCUTSComponent,
     MINISHOPLINETOTALComponent,
-    RANDOMQUOTEComponent
+    RANDOMQUOTEComponent,
+    UNITCONVERTERComponent,
+];
+
+const COMPLEXITY_LEVEL_THREE = [
+
 ];
 
 @Component({
   selector: 'app-root',
-  imports: [COMPLEXITY_LEVEL_TWO[12]],
+  imports: [COMPLEXITY_LEVEL_TWO[13]],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-    constructor() {console.log(`Level One Tasks: ${COMPLEXITY_LEVEL_ONE.length},\nLevel Two Tasks: ${COMPLEXITY_LEVEL_TWO.length}`)}
+    constructor() {console.log(`Level One Tasks: ${COMPLEXITY_LEVEL_ONE.length},\nLevel Two Tasks: ${COMPLEXITY_LEVEL_TWO.length},\nLevel Three Tasks: ${COMPLEXITY_LEVEL_THREE.length}`)}
 }

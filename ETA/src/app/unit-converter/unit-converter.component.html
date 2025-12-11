@@ -1,0 +1,148 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Konwerter</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="celsiusInput">Celsjusz (°C):</label>
+                    <div class="input-group">
+                        <input class="form-control" id="celsiusInput" placeholder="Wprowadź temperaturę w °C..." step="0.1" type="number" (input)="handleCelcInput()">
+                        <div class="input-group-append">
+                            <span class="input-group-text">°C</span>
+                        </div>
+                    </div>
+                    <small class="text-muted">{{getTempRange("C")}}</small>
+                </div>
+                <div class="form-group">
+                    <label for="fahrenheitInput">Fahrenheit (°F):</label>
+                    <div class="input-group">
+                        <input class="form-control" id="fahrenheitInput" placeholder="Wprowadź temperaturę w °F..." step="0.1" type="number" (input)="handleFahrInput()">
+                        <div class="input-group-append">
+                            <span class="input-group-text">°F</span>
+                        </div>
+                    </div>
+                    <small class="text-muted">{{getTempRange("F")}}</small>
+                </div>
+                <button type="button" class="btn btn-secondary" (click)="this.clear()">Wyczyść</button>
+            </div>
+        </div>
+        <div class="alert alert-info" role="alert" [hidden]="lastConversion == undefined">
+            <h6 class="alert-heading">Ostatnia konwersja:</h6>
+            <p class="mb-0"><strong>{{this.lastConversion}}</strong></p>
+            <hr>
+            <p class="mb-0">Sprawdź konsolę przeglądarki aby zobaczyć wszystkie logi.</p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="card-title mb-0">Wzory konwersji</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h6>Celsjusz → Fahrenheit:</h6><code>F = C × 9/5 + 32</code>
+                </div>
+                <div class="mb-3">
+                    <h6>Fahrenheit → Celsjusz:</h6><code>C = (F - 32) × 5/9</code>
+                </div>
+                <div>
+                    <h6>Zaokrąglanie:</h6><code>Wyniki zaokrąglane do 1 miejsca po przecinku</code>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="card-title mb-0">Przykłady konwersji</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>°C</th>
+                                <th>°F</th>
+                                <th>Opis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0</td>
+                                <td>32</td>
+                                <td>Punkt zamarzania wody</td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                                <td>68</td>
+                                <td>Pokojowa temperatura</td>
+                            </tr>
+                            <tr>
+                                <td>37</td>
+                                <td>98.6</td>
+                                <td>Temperatura ciała</td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>212</td>
+                                <td>Punkt wrzenia wody</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title mb-0">Zakresy temperatur</h6>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <h6 class="text-primary">Celsjusz</h6>
+                        <ul class="list-unstyled small">
+                            <li>&lt; 0°C - Mróz</li>
+                            <li>0-10°C - Zimno</li>
+                            <li>10-20°C - Chłodno</li>
+                            <li>20-30°C - Ciepło</li>
+                            <li>&gt; 30°C - Gorąco</li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="text-warning">Fahrenheit</h6>
+                        <ul class="list-unstyled small">
+                            <li>&lt; 32°F - Mróz</li>
+                            <li>32-50°F - Zimno</li>
+                            <li>50-68°F - Chłodno</li>
+                            <li>68-86°F - Ciepło</li>
+                            <li>&gt; 86°F - Gorąco</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mt-4">
+    <div class="card-header">
+        <h6 class="card-title mb-0">Aktualne wartości</h6>
+    </div>
+    <div class="card-body">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <h5 class="text-primary">{{this.currentCelcius ? this.currentCelcius.toFixed(1) : "-"}}°C</h5><small class="text-muted">Celsjusz</small>
+            </div>
+            <div class="col-md-3">
+                <h5 class="text-warning">{{this.currentFahrenheit ? this.currentFahrenheit.toFixed(1) : "-"}}°F</h5><small class="text-muted">Fahrenheit</small>
+            </div>
+            <div class="col-md-3">
+                <h5 class="text-info">{{this.currentCelcius && this.currentFahrenheit ? '✓' : '○'}}</h5>
+                <small class="text-muted">Synchronizacja</small>
+            </div>
+            <div class="col-md-3">
+                <h5 class="text-success">{{lastConversion ? '✓' : '○'}}</h5>
+                <small class="text-muted">Konwersja</small>
+            </div>
+        </div>
+    </div>
+</div>
