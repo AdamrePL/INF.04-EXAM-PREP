@@ -1,0 +1,61 @@
+<h2>Lista produktów</h2>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Wyszukiwanie i sortowanie</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <label for="srch" class="form-label">Szukaj:</label>
+                <form>
+                    <div class="input-group">
+                        <input type="search" id="srch" class="form-control" (input)="search($event)" placeholder="Wprowadź nazwę produktu...">
+                        <button type="reset" class="btn btn-outline-secondary" (click)="clear()">Wyczyść</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <p class="row mb-2">Sortowanie: </p>
+                <div class="input-group row">
+                    <button type="button" (click)="switchMode('name')" [class]="'col btn ' + (this.selectedSortMethod == 'name' ? 'btn-primary' : 'btn-outline-primary')">Sortuj po nazwie</button>
+                    <button type="button" (click)="switchMode('price')" [class]="'col btn ' + (this.selectedSortMethod == 'price' ? 'btn-primary' : 'btn-outline-primary')">Sortuj po cenie</button>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-secondary mt-3 mb-0">
+            <strong>Liczba produktów: {{this.items.length}}</strong>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Produkty</h5>
+    </div>
+    <div class="card-body">
+        @if (this.items.length == 0) {
+            <div class="text-center alert alert-secondary">
+                <h3 class="mb-2">Brak wyników</h3>
+                <p class="mb-0">Nie znaleziono produktów pasujących do frazy "{{this.searchVal}}"</p>
+            </div>
+        } @else {
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nazwa</th>
+                        <th scope="col">Cena</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of items; track $index) {
+                        <tr>
+                            <th scope="row">{{$index+1}}</th>
+                            <td>{{item.name}}</td>
+                            <td>{{item.price}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
