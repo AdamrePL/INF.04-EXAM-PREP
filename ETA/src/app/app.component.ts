@@ -22,6 +22,10 @@ import { KEYBOARDSHORTCUTSComponent } from "./keyboard-shortcuts/keyboard-shortc
 import { MINISHOPLINETOTALComponent } from "./mini-shop-line-total/mini-shop-line-total.component";
 import { RANDOMQUOTEComponent } from "./random-quote/random-quote.component";
 import { UNITCONVERTERComponent } from "./unit-converter/unit-converter.component";
+import { VISUALBARLISTComponent } from "./visual-bar-list/visual-bar-list.component";
+import { SEARCHABLELISTComponent } from "./searchable-list/searchable-list.component";
+import { PREEGZAM2025Component } from "./preegzam-2025/preegzam-2025.component";
+import { TODOWITHPRIORITYComponent } from "./todo-with-priority/todo-with-priority.component";
 
 const COMPLEXITY_LEVEL_ONE = [
     BOOKMGMTComponent,
@@ -50,6 +54,10 @@ const COMPLEXITY_LEVEL_TWO = [
     MINISHOPLINETOTALComponent,
     RANDOMQUOTEComponent,
     UNITCONVERTERComponent,
+    VISUALBARLISTComponent,
+    SEARCHABLELISTComponent,
+    TODOWITHPRIORITYComponent,
+    PREEGZAM2025Component,
 ];
 
 const COMPLEXITY_LEVEL_THREE = [
@@ -58,7 +66,7 @@ const COMPLEXITY_LEVEL_THREE = [
 
 @Component({
   selector: 'app-root',
-  imports: [COMPLEXITY_LEVEL_TWO[13]],
+  imports: [COMPLEXITY_LEVEL_TWO[16]],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
