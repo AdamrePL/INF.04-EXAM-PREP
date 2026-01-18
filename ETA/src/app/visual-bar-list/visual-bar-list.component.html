@@ -1,0 +1,101 @@
+<h2>Lista pasków wizualnych</h2>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Elementy z paskami procentowymi</h5>
+    </div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            @for (item of items; track $index) {
+                <li [class]="'list-group-item ' + (this.selectedId == item.id ? 'text-white bg-primary' : '')">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <h6 class="mb-0">{{item.label}}</h6>
+                            <small class="text-muted">{{item.percentage}}%</small>
+                        </div>
+                        <span class="badge bg-secondary">#{{item.id}}</span>
+                    </div>
+                    <div class="progress mb-2" role="button" style="height: 20px;" (click)="selectBar(item.id)">
+                        <div class="progress-bar" role="progressbar" [style]="'width: ' + item.percentage + '%;' + 'background-color: ' + this.colors[$index] ">
+                            <span>{{item.percentage}}%</span>
+                        </div>
+                    </div>
+                    <small class="text-muted">Kliknij w pasek aby wybrać element</small>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4" [hidden]="this.selectedId == null">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="card-title mb-0">Aktualizuj: {{this.selectedItem != null ? this.selectedItem.label : ''}}</h6>
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="this.unselectItem()">Anuluj</button>
+    </div>
+    <div class="card-body">
+        <form (submit)="updateValue($event)">
+            <div class="form-group">
+                <label for="updateValue">Nowa wartość procentowa (0-100):</label>
+                <div class="input-group">
+                    <input class="form-control" id="updateValue" min="0" max="100" placeholder="Wprowadź wartość" type="number" name="val" [(ngModel)]="this.currentInputValue">
+                    <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Aktualizuj</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h6 class="card-title mb-0">Statystyki</h6>
+    </div>
+    <div class="card-body row text-center">
+        <div class="col-6 mb-3">
+            <h5 class="text-primary">{{this.items.length}}</h5>
+            <small class="text-muted">Elementów</small>
+        </div>
+        <div class="col-6 mb-3">
+            <h5 class="text-success">{{this.getStatistics().sum}}</h5>
+            <small class="text-muted">Suma</small>
+        </div>
+        <div class="col-6 mb-3">
+            <h5 class="text-info">{{(this.getStatistics().avg).toFixed(1)}}</h5>
+            <small class="text-muted">Średnia</small>
+        </div>
+        <div class="col-6 mb-3">
+            <h5 class="text-warning">{{this.getStatistics().max}}</h5>
+            <small class="text-muted">Maksimum</small>
+        </div>
+        <div class="col-6">
+            <h5 class="text-danger">{{this.getStatistics().min}}</h5>
+            <small class="text-muted">Minimum</small>
+        </div>
+        <div class="col-6">
+            <h5 class="text-secondary">{{this.getStatistics().avg.toFixed()}}%</h5>
+            <small class="text-muted">Wypełnienie</small>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4" [hidden]="this.selectedId == null">
+    <div class="card-header">
+        <h6 class="card-title mb-0">Wybrany element</h6>
+    </div>
+    <div class="card-body">
+        <div class="text-center">
+            <h5 class="text-primary">{{this.selectedItem != null ? this.selectedItem.label : ''}}</h5>
+            <div class="mb-3">
+                <span class="badge bg-primary" style="font-size: 1.5rem; padding: 0.5rem 1rem;">{{this.selectedItem != null ? this.selectedItem.percentage : ''}}%</span>
+            </div>
+            <div class="progress mb-3" style="height: 15px;">
+                <div class="progress-bar" [style]="'width:' + (this.selectedItem != null ? this.selectedItem.percentage : 0) + '%; background-color:' + this.colors[this.selectedId!-1] + ';'"></div>
+            </div>
+            <p class="small text-muted mb-0">Kliknij w pasek aby wybrać inny element</p>
+        </div>
+    </div>
+</div>
