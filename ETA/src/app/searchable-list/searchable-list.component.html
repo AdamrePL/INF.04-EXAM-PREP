@@ -1,0 +1,59 @@
+<h2>Wyszukiwarka nazwisk</h2>
+<div class="card">
+    <div class="card-header"><div><h5 class="mb-0">Wyszukiwanie</h5></div></div>
+    <div class="card-body">
+        <form>
+            <label for="search">Szukaj</label>
+            <div class="input-group">
+                <input class="form-control" type="search" id="search" name="search" (input)="search($event)" placeholder="Wprowadź tekst do wyszukiwania...">
+                <button type="reset" class="btn btn-outline-secondary" [disabled]="this.arg == ''" (click)="this.arg = ''">Wyczyść</button>
+            </div>
+        </form>
+        <div class="mt-3">
+            <div class="alert alert-info mb-0">
+                <strong>Liczba wyników: {{display().length}}</strong>
+                @if (this.arg.length > 0) {
+                    <span class="ms-2">(wyszukiwanie: "{{this.arg}}")</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Lista nazwisk@if (this.arg.length > 0){<small class="text-muted ms-2">- przefiltrowane wyniki</small>} </h5>
+    </div>
+    <div class="card-body">
+        @if (display().length == 0) {
+            <div class="text-center py-4">
+                <div class="alert alert-warning">
+                    <h5>Brak wyników</h5>
+                    <p class="mb-0">Nie znaleziono nazwisk pasujących do frazy "{{this.arg}}".<br>Spróbuj użyć innego tekstu wyszukiwania.</p>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-6">
+                <ol class="list-group list-group-flush">
+                    @for (name of display().slice(0,Math.ceil(display().length/2)); track $index) {
+                        <li class="d-flex justify-content-between align-items-center list-group-item">
+                            <span>{{name}}</span>
+                            <span class="badge bg-primary rounded-pill">{{$index+1}}</span>
+                        </li>
+                    }
+                </ol>
+            </div>
+            <div class="col-md-6">
+                <ol class="list-group list-group-flush">
+                    @for (name of display().slice(Math.ceil(display().length/2)); track $index) {
+                        <li class="d-flex justify-content-between align-items-center list-group-item">
+                            <span>{{name}}</span>
+                            <span class="badge bg-primary rounded-pill">{{($index+display().length/2+1).toFixed(0)}}</span>
+                        </li>
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
