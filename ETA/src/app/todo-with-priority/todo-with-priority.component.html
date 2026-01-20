@@ -1,1 +1,63 @@
-<p>todo-with-priority works!</p>
+<h2>Lista zadań z priorytetami</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header"><h5 class="card-title mb-0">Dodaj nowe zadanie</h5></div>
+            <div class="card-body">
+                <form>
+                    <label for="zadanieInpt">Zadanie:</label>
+                    <input class="form-control" type="text" name="zadanieInpt" id="zadanieInpt" placeholder="Wprowadź treść zadania..." [(ngModel)]="this.task.text">
+                    <label>Priorytet:</label>
+                    @for (prior of priorities; track $index) {
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" [id]="prior" name="priority" [value]="prior" [(ngModel)]="this.task.priority">
+                            <label class="form-check-label" [for]="prior">{{prior}}</label>
+                        </div>
+                    }
+                    <button class="btn btn-primary" type="submit" (click)="add($event)" [disabled]="this.task.text.trim().length == 0">Dodaj zadanie</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><h6 class="card-title mb-0">Filtry priorytetów</h6></div>
+            <div class="card-body">
+                @for (prior of this.priorities; track $index) {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" [id]="prior[0]" (change)="filterOut($event)" [value]="prior" [checked]="priorityDisplays[prior]">
+                        <label [for]="prior[0]"><span [class]="'badge ' + priorityColors[prior] + ' me-2'">{{prior}}</span>Pokaż zadania o {{prior.toLowerCase()}}m priorytecie</label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header"><h6 class="card-title mb-0">Lista zadań<span class="badge bg-primary ms-2">{{getDisplayedCount()}}/{{this.tasks.length}}</span></h6></div>
+            <div class="card-body">
+                <ol class="list-group list-group-flush">
+                    @for (task of tasks; track $index) {
+                        @if (priorityDisplays[task.priority]) {
+                            <li class="list-group-item d-flex justify-content-between align-items-center"><span>{{task.text}}</span><span [class]="'badge ' + this.priorityColors[task.priority]">{{task.priority}}</span></li>
+                        }
+                    }
+                    @if (getDisplayedCount() == 0) {
+                        <div class="text-center text-muted py-3"><div><p class="mb-0">Brak zadań</p><small>Dodaj pierwsze zadanie używając formularza</small></div></div>
+                    }
+                </ol>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><h6 class="card-title mb-0">Statystyki</h6></div>
+            <div class="card-body">
+                <div class="row text-center">
+                    @for (prior of priorities.reverse(); track $index) {
+                        <div class="col-4">
+                            <h5 [class]="'text'+priorityColors[prior].slice(2)">{{getPriorCount(prior)}}</h5>
+                            <small class="text-muted">{{prior}}</small>
+                        </div>
+                    }
+                </div>
+            </div>
+    </div>
+    </div>
+</div>
